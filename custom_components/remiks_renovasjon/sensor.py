@@ -23,7 +23,7 @@ def setup_platform(hass, config, add_entities, discovery_info=None):
     remiks_renovasjon = hass.data[DATA_REMIKS_RENOVASJON]
 
     add_entities(
-        RemiksRenovasjonSensor(remiks_renovasjon, event.replace(' ','_').lower()) for event in track
+        RemiksRenovasjonSensor(remiks_renovasjon, track[event].replace(' ','_').lower()) for event in track
     )
 
 
@@ -50,7 +50,7 @@ class RemiksRenovasjonSensor(Entity):
     @property
     def entity_picture(self):
         """Return the symbol of the event (not implemented)"""
-        return none
+        return None
         event = self._remiks_renovasjon.get_tracked_event(self._event_code)
         if event is not None:
             return event[3]
