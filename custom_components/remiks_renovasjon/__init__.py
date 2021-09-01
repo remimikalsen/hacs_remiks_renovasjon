@@ -35,7 +35,7 @@ def setup(hass, config):
     track = config[DOMAIN][CONF_TRACK]
 
     remiks_renovasjon = RemiksRenovasjon(
-        street, street_number, street_number
+        street, street_number, track
     )
     hass.data[DATA_REMIKS_RENOVASJON] = remiks_renovasjon
 
