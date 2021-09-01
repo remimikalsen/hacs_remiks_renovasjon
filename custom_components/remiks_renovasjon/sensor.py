@@ -3,6 +3,9 @@ import logging
 
 from homeassistant.components.sensor import PLATFORM_SCHEMA
 from homeassistant.helpers.entity import Entity
+import homeassistant.helpers.config_validation as cv
+import voluptuous as vol
+
 from ..remiks_renovasjon import DATA_REMIKS_RENOVASJON
 
 _LOGGER = logging.getLogger(__name__)
@@ -23,7 +26,7 @@ def setup_platform(hass, config, add_entities, discovery_info=None):
     remiks_renovasjon = hass.data[DATA_REMIKS_RENOVASJON]
 
     add_entities(
-        RemiksRenovasjonSensor(remiks_renovasjon, track[event].replace(' ','_').lower()) for event in track
+        RemiksRenovasjonSensor(remiks_renovasjon, event.replace(' ','_').lower()) for event in track
     )
 
 

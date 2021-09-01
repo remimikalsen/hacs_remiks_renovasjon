@@ -75,8 +75,7 @@ class RemiksRenovasjon:
        
         _LOGGER.debug("Loaded page: " + page)
         tracked = []
-        for i in self.track:
-            event = self.track[i]
+        for event in self.track:
             _LOGGER.debug("Looking up " + event)
             results = re.findall(r'(\d{2}.{6}\d{4}) - ' + event, page)
             event_date = datetime.strptime(results[0], '%d. %b %Y')
@@ -89,8 +88,7 @@ class RemiksRenovasjon:
     @staticmethod
     def _tracked_needs_update(tracked):
         
-        for i in tracked:
-            item = tracked[i]
+        for item in tracked:
             event_code, _, next_date = item
 
             if next_date is None:
