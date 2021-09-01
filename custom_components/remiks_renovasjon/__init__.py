@@ -20,7 +20,7 @@ CONFIG_SCHEMA = vol.Schema(
             {
                 vol.Required(CONF_STREET): cv.string,
                 vol.Required(CONF_STREET_NUMBER): cv.string,
-                vol.Required(CONF_TRACK): cv.list,
+                vol.Required(CONF_TRACK): cv.ensure_list,
             }
         )
     },
