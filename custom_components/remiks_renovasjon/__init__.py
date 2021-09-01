@@ -84,7 +84,6 @@ class RemiksRenovasjon:
         tracked = []
         for event in self.track:
             _LOGGER.debug("Looking up " + event)
-            _LOGGER.debug("self.track " + self.track)
             results = re.findall(r'(\d{2}.{6}\d{4}) - ' + event, page)
             event_date = datetime.strptime(results[0], '%d. %b %Y')
             event_code = event.replace(' ','_').lower()
