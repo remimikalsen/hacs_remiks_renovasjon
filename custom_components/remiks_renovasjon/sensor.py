@@ -39,7 +39,7 @@ class RemiksRenovasjonSensor(Entity):
         """Return the state/date of the event."""
         event = self._remiks_renovasjon.get_tracked_event(self._event_code)
         if event is not None:
-            _LOGGER.debug("State of event code: " + self._event_code + ": " + event[2])
+            _LOGGER.debug("State of event code: " + self._event_code + ": " + event[2].strftime('%d. %b %Y'))
             return event[2].strftime('%d. %b %Y')
         else:
             _LOGGER.debug("No state for event code: " + self._event_code)
