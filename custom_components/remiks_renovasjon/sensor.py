@@ -3,30 +3,18 @@ import logging
 
 from homeassistant.components.sensor import PLATFORM_SCHEMA
 from homeassistant.helpers.entity import Entity
-import homeassistant.helpers.config_validation as cv
-import voluptuous as vol
-
 from ..remiks_renovasjon import DATA_REMIKS_RENOVASJON
 
 _LOGGER = logging.getLogger(__name__)
 
-CONF_TRACK = "track"
-
-PLATFORM_SCHEMA = PLATFORM_SCHEMA.extend(
-    {
-        vol.Required(CONF_TRACK): cv.ensure_list,
-    }
-)
-
 SCAN_INTERVAL = timedelta(minutes=30)
 
-
 def setup_platform(hass, config, add_entities, discovery_info=None):
-    track = config.get(CONF_TRACK)
+
     remiks_renovasjon = hass.data[DATA_REMIKS_RENOVASJON]
 
     add_entities(
-        RemiksRenovasjonSensor(remiks_renovasjon, event.replace(' ','_').lower()) for event in track
+        RemiksRenovasjonSensor(remiks_renovasjon, event[0]) for event in remiks_renovasjon.get_tracked_event()
     )
 
 

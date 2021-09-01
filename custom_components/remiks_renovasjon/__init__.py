@@ -61,10 +61,13 @@ class RemiksRenovasjon:
         if update:
             self._tracked = self._fetch_tracked()
 
-    def get_tracked_event(self, event_code):
-        for event in self._tracked:
-            if event[0] == event_code:
-                return event
+    def get_tracked_event(self, event_code=None):
+        if event_code is None:
+            return self._tracked
+        else:
+            for event in self._tracked:
+                if event[0] == event_code:
+                    return event
         return None
         
 
