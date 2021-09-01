@@ -14,7 +14,7 @@ CONF_TRACK = "track"
 
 PLATFORM_SCHEMA = PLATFORM_SCHEMA.extend(
     {
-        vol.Required(CONF_TRACK): vol.All(cv.ensure_list),
+        vol.Required(CONF_TRACK): cv.ensure_list,
     }
 )
 
