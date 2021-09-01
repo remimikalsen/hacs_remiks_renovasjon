@@ -72,9 +72,11 @@ class RemiksRenovasjon:
             }
         )
         page = urllib.request.urlopen(req).read().decode('utf-8')
-
+       
+        _LOGGER.debug("Loaded page: " + page)
         tracked = []
         for event in self.track:
+            _LOGGER.debug("Looking up " + event)
             results = re.findall(r'(\d{2}.{6}\d{4}) - ' + event, page)
             event_date = datetime.strptime(results[0], '%d. %b %Y')
             event_code = event.replace(' ','_').lower()
