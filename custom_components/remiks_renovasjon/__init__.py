@@ -80,7 +80,7 @@ class RemiksRenovasjon:
         )
         page = urllib.request.urlopen(req).read().decode('utf-8')
        
-        _LOGGER.debug("Loaded page: " + page)
+        _LOGGER.debug("Loaded page content: " + page)
         tracked = []
         for event in self.track:
             _LOGGER.debug("Looking up " + event)
