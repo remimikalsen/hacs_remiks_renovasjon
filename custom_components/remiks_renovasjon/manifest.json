@@ -1,0 +1,8 @@
+{
+  "domain": "remiks_renovasjon",
+  "name": "Remiks renovasjon",
+  "documentation": "https://github.com/remimikalsen/hacs_remiks_renovasjon",
+  "codeowners": ["@remimikalsen"],
+  "requirements": [],
+  "version": "1.0"
+}
