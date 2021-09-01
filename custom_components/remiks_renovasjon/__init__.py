@@ -104,7 +104,7 @@ class RemiksRenovasjon:
             if next_date is None:
                 _LOGGER.info("No data for " + event_code + ", so refreshing track list.")
                 return True
-            if next_date.date() < datetime.today():
+            if next_date.date() < datetime.today().date():
                 _LOGGER.info("Data for " + event_code + " expired, so refreshing track list.")
                 return True
 
