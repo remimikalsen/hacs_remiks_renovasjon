@@ -40,7 +40,8 @@ class RemiksRenovasjonBinarySensor(BinarySensorEntity):
         """Return the boolean state of the entity."""
         item = self._remiks_renovasjon.get_parsed_data(self._entity_code)
         if item is not None:
-            state =  (datetime.strptime(item[3], '%d. %b %Y').date() - datetime.now().date()).days <= int(self._remiks_renovasjon.days_notice)
+            # datetime.strptime(item[3], '%d. %b %Y').date()
+            state =  (item[3].date() - datetime.now().date()).days <= int(self._remiks_renovasjon.days_notice)
             _LOGGER.debug("State of entity code: " + str(state))
             return state
         else:
