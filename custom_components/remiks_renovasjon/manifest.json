@@ -4,5 +4,7 @@
   "documentation": "https://github.com/remimikalsen/hacs_remiks_renovasjon",
   "codeowners": ["@remimikalsen"],
   "requirements": [],
-  "version": "1.0"
+  "dependencies": [],
+  "iot-class" : "cloud_polling",
+  "version": "v0.2-alpha"
 }

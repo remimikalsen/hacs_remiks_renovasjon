@@ -1,24 +1,24 @@
 from datetime import timedelta
+from datetime import datetime
 import logging
 
-from homeassistant.components.sensor import PLATFORM_SCHEMA
-from homeassistant.helpers.entity import Entity
+from homeassistant.components.binary_sensor import PLATFORM_SCHEMA, BinarySensorEntity
+#from homeassistant.helpers.entity import Entity
 from ..remiks_renovasjon import DATA_REMIKS_RENOVASJON
 
 _LOGGER = logging.getLogger(__name__)
 
 SCAN_INTERVAL = timedelta(hours=6)
 
-
 def setup_platform(hass, config, add_entities, discovery_info=None):
 
     remiks_renovasjon = hass.data[DATA_REMIKS_RENOVASJON]
 
     add_entities(
-        RemiksRenovasjonSensor(remiks_renovasjon, item[0]) for item in remiks_renovasjon.get_parsed_data()
+        RemiksRenovasjonBinarySensor(remiks_renovasjon, item[0]) for item in remiks_renovasjon.get_parsed_data()
     )
 
-class RemiksRenovasjonSensor(Entity):
+class RemiksRenovasjonBinarySensor(BinarySensorEntity):
     def __init__(self, remiks_renovasjon, entity_code):
         """Initialize with API object, device id."""
         _LOGGER.debug("Adding entity code: " + entity_code)
@@ -30,18 +30,19 @@ class RemiksRenovasjonSensor(Entity):
         """Return the full name associated with the entity_code, if any."""
         item = self._remiks_renovasjon.get_parsed_data(self._entity_code)
         if item is not None:
-            _LOGGER.debug("Name of entity code: " + self._entity_code + ": " + item[1] + "_" + item[2])
-            return item[1] + "_" + item[2]
+            _LOGGER.debug("Name of entity code: " + self._entity_code + ": " + item[1] + "_" + item[2] + "_is_on")
+            return item[1] + "_" + item[2] + "_is_on"
         else:
             _LOGGER.debug("No name for entity code: " + self._entity_code)
 
     @property
-    def state(self):
-        """Return the state/date of the entity."""
+    def is_on(self):
+        """Return the boolean state of the entity."""
         item = self._remiks_renovasjon.get_parsed_data(self._entity_code)
         if item is not None:
-            _LOGGER.debug("State of entity code: " + self._entity_code + ": " + item[3].strftime('%d. %b %Y'))
-            return item[3].strftime('%d. %b %Y')
+            state =  (datetime.strptime(item[3], '%d. %b %Y').date() - datetime.now().date()).days <= int(self._remiks_renovasjon.days_notice)
+            _LOGGER.debug("State of entity code: " + str(state))
+            return state
         else:
             _LOGGER.debug("No state for entity code: " + self._entity_code)
 

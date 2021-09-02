@@ -1,7 +1,7 @@
 {
     "name": "Remiks renovasjon",
     "domains": [
-        "sensor"
+        "sensor", "binary_sensor"
     ],
     "iot_class": "Cloud Polling"
 }
