@@ -8,10 +8,23 @@ To activate the integration, add the following section in your configuration.yam
 
 ```
 remiks_renovasjon:
-  streets: ['tomasjordvegen-129']
-  following: ['Optisk sortert avfall', 'Glass og metallemballasje', 'Posesupplering']
+  streets: ["tomasjordvegen-129"]
+  following: ["Optisk sortert avfall", "Glass og metallemballasje", "Posesupplering"]
   days_notice: 1
 ```
+
+Also add the following to configuration.yaml get the sensors and binary sensors:
+
+```
+binary_sensor:
+  - platform: remiks_renovasjon
+
+sensor:
+  - platform: remiks_renovasjon
+```
+If you already have a binary_sensor and sensor section, don't duplicate, just add the platform to both sections.
+
+
 
 **streets:**\
 A list of streets you'd like to get garbage collecting dates for. 
