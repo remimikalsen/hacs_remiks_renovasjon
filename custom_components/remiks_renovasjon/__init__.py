@@ -27,7 +27,7 @@ CONFIG_SCHEMA = vol.Schema(
             {
                 vol.Required(CONF_STREETS): cv.ensure_list,
                 vol.Required(CONF_FOLLOWING): cv.ensure_list,
-                vol.Required(CONF_DAYS_NOTICE): cv.integer,
+                vol.Required(CONF_DAYS_NOTICE): cv.positive_int,
             }
         )
     },
