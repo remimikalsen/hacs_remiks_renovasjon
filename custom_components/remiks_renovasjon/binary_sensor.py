@@ -30,32 +30,31 @@ class RemiksRenovasjonBinarySensor(BinarySensorEntity):
         """Return the full name associated with the entity_code, if any."""
         item = self._remiks_renovasjon.get_parsed_data(self._entity_code)
         if item is not None:
-            _LOGGER.debug("Name of entity code: " + self._entity_code + ": " + item[1] + "_" + item[2] + "_is_on")
-            return item[1] + "_" + item[2] + "_is_on"
+            _LOGGER.debug("Name of entity code: Remiks boolean " + self._entity_code + ": " + item[1] + " " + item[3])
+            return "Remiks boolean " + item[1] + " " + item[3]
         else:
-            _LOGGER.debug("No name for entity code: " + self._entity_code)
+            _LOGGER.debug("No name for entity code: Remiks boolean " + self._entity_code)
 
     @property
     def is_on(self):
         """Return the boolean state of the entity."""
         item = self._remiks_renovasjon.get_parsed_data(self._entity_code)
         if item is not None:
-            # datetime.strptime(item[3], '%d. %b %Y').date()
-            state =  (item[3].date() - datetime.now().date()).days <= int(self._remiks_renovasjon.days_notice)
-            _LOGGER.debug("State of entity code: " + str(state))
+            state =  (item[4].date() - datetime.now().date()).days <= int(self._remiks_renovasjon.days_notice)
+            _LOGGER.debug("State of entity code: Remiks boolean " + self._entity_code + ": " + str(state))
             return state
         else:
-            _LOGGER.debug("No state for entity code: " + self._entity_code)
+            _LOGGER.debug("No state for entity code: Remiks boolean " + self._entity_code)
 
     @property
     def icon(self):
         """Icon of the entity."""
         item = self._remiks_renovasjon.get_parsed_data(self._entity_code)
-        if item is not None and item[4] != "":
-            _LOGGER.debug("Icon of entity code: " + self._entity_code + ": " + item[4])
-            return item[4]
+        if item is not None and item[5] != "":
+            _LOGGER.debug("Icon of entity code: Remiks boolean " + self._entity_code + ": " + item[5])
+            return item[5]
         else:
-            _LOGGER.debug("No icon for entity code: " + self._entity_code)
+            _LOGGER.debug("No icon for entity code: Remiks boolean " + self._entity_code)
 
     def update(self):
         """Update list of parsed data."""

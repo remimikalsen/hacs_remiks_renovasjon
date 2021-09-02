@@ -30,8 +30,9 @@ class RemiksRenovasjonSensor(Entity):
         """Return the full name associated with the entity_code, if any."""
         item = self._remiks_renovasjon.get_parsed_data(self._entity_code)
         if item is not None:
-            _LOGGER.debug("Name of entity code: " + self._entity_code + ": " + item[1] + "_" + item[2])
-            return item[1] + "_" + item[2]
+            name = "Remiks " + item[1] + " " + item[3]
+            _LOGGER.debug("Name of entity code " + self._entity_code + ": " + name)
+            return name
         else:
             _LOGGER.debug("No name for entity code: " + self._entity_code)
 
@@ -40,8 +41,9 @@ class RemiksRenovasjonSensor(Entity):
         """Return the state/date of the entity."""
         item = self._remiks_renovasjon.get_parsed_data(self._entity_code)
         if item is not None:
-            _LOGGER.debug("State of entity code: " + self._entity_code + ": " + item[3].strftime('%d. %b %Y'))
-            return item[3].strftime('%d. %b %Y')
+            entity_state = item[4].strftime('%d. %b %Y')
+            _LOGGER.debug("State of entity code: " + self._entity_code + ": " + entity_state)
+            return entity_state
         else:
             _LOGGER.debug("No state for entity code: " + self._entity_code)
 
@@ -49,9 +51,9 @@ class RemiksRenovasjonSensor(Entity):
     def icon(self):
         """Icon of the entity."""
         item = self._remiks_renovasjon.get_parsed_data(self._entity_code)
-        if item is not None and item[4] != "":
-            _LOGGER.debug("Icon of entity code: " + self._entity_code + ": " + item[4])
-            return item[4]
+        if item is not None and item[5] != "":
+            _LOGGER.debug("Icon of entity code: " + self._entity_code + ": " + item[5])
+            return item[5]
         else:
             _LOGGER.debug("No icon for entity code: " + self._entity_code)
 

@@ -92,7 +92,7 @@ class RemiksRenovasjon:
                 results = re.findall(r'(\d{2}.{6}\d{4}) - ' + event, page)
                 event_date = datetime.strptime(results[0], '%d. %b %Y')
                 entity_code = event.replace(' ','_').lower() + "_" + street
-                parsed_data.append( (entity_code, event, street, event_date, DEFAULT_ICONS.get(event, '')))
+                parsed_data.append( (entity_code, event, street, street.replace("_", " ").title(), event_date, DEFAULT_ICONS.get(event, '')))
 
         _LOGGER.info("Compiled a list of events to follow from remiks.no")
         return parsed_data
@@ -101,7 +101,7 @@ class RemiksRenovasjon:
     def _parsed_data_needs_update(parsed_data):
         
         for item in parsed_data:
-            entity_code, _, _, next_date, _ = item
+            entity_code, _, _, _, next_date, _ = item
 
             if next_date is None:
                 _LOGGER.info("No data for " + entity_code + ". Refreshing data.")
