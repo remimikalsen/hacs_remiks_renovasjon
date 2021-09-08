@@ -30,6 +30,8 @@ You will get sensor with the next date and a binary_sensor for each pair of even
 Specify how many days in advance of the next garbage collecting date you'd like the binary_sensors to be activated.
 1 means that the binary_sensors will turn on the day before. You can for instance use this to run an automation every night at 22h checking if you need to prepare for next days garbage collection.
 
+**turnover_hour (optional):** \
+At what time of day should you consider today's garbage collection history. Default is 18, which means next collection day and binary sensors will be refreshed after 18:00. Scan time is 1 hour, so sensors will be updated at least once an hour. Only use positive integers from 0 to 24.
 
 Finally add the following to configuration.yaml to get the sensors and binary sensors:
 

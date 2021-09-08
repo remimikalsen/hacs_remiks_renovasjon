@@ -7,7 +7,7 @@ from ..remiks_renovasjon import DATA_REMIKS_RENOVASJON
 
 _LOGGER = logging.getLogger(__name__)
 
-SCAN_INTERVAL = timedelta(hours=6)
+SCAN_INTERVAL = timedelta(hours=1)
 
 
 def setup_platform(hass, config, add_entities, discovery_info=None):

@@ -13,6 +13,10 @@ DATA_REMIKS_RENOVASJON = "data_remiks_renovasjon"
 CONF_STREETS = "streets"
 CONF_FOLLOWING = "following"
 CONF_DAYS_NOTICE = "days_notice"
+CONF_TURNOVER_HOUR = "turnover_hour"
+
+# When to load next day
+DEFAULT_TURNOVER_HOUR = 18
 
 DEFAULT_ICONS = {
     'Optisk sortert avfall': 'mdi:delete-empty',
@@ -28,6 +32,7 @@ CONFIG_SCHEMA = vol.Schema(
                 vol.Required(CONF_STREETS): cv.ensure_list,
                 vol.Required(CONF_FOLLOWING): cv.ensure_list,
                 vol.Required(CONF_DAYS_NOTICE): cv.positive_int,
+                vol.Optional(CONF_TURNOVER_HOUR, default=DEFAULT_TURNOVER_HOUR): cv.positive_int,
             }
         )
     },
@@ -106,7 +111,7 @@ class RemiksRenovasjon:
             if next_date is None:
                 _LOGGER.info("No data for " + entity_code + ". Refreshing data.")
                 return True
-            if next_date.date() < datetime.today().date():
+            if next_date.date() < datetime.today().date() or (next_date.date() == datetime.today().date() and datetime.today().time().hour >= CONF_TURNOVER_HOUR):
                 _LOGGER.info("Data for " + entity_code + " has expired. Refreshing data.")
                 return True
 
