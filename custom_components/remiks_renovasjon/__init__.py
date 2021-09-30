@@ -1,7 +1,6 @@
 import urllib.request
 import re
 from datetime import datetime
-import locale
 import logging
 import homeassistant.helpers.config_validation as cv
 import voluptuous as vol
@@ -91,13 +90,15 @@ class RemiksRenovasjon:
             )
             page = urllib.request.urlopen(req).read().decode('utf-8')
         
-            locale.setlocale(locale.LC_ALL, 'no_NB.utf8')
             _LOGGER.debug("Loaded page content: " + page)
             parsed_data = []
             for event in self.following:
                 _LOGGER.debug("Looking up " + event)
                 results = re.findall(r'(\d{2}.{6}\d{4}) - ' + event, page)
-                event_date = datetime.strptime(results[0], '%d. %b %Y')
+                dato = results[0]
+                for word, initial in {"mai":"may", "okt":"oct", "des":"dec" }.items():
+                    dato = dato.replace(word.lower(), initial)
+                event_date = datetime.strptime(dato, '%d. %b %Y')
                 entity_code = event.replace(' ','_').lower() + "_" + street
                 parsed_data.append( (entity_code, event, street, street.replace("-", " ").title(), event_date, DEFAULT_ICONS.get(event, '')))
 
