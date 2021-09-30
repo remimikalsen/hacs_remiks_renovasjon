@@ -1,6 +1,7 @@
 import urllib.request
 import re
 from datetime import datetime
+import locale
 import logging
 import homeassistant.helpers.config_validation as cv
 import voluptuous as vol
@@ -90,6 +91,7 @@ class RemiksRenovasjon:
             )
             page = urllib.request.urlopen(req).read().decode('utf-8')
         
+            locale.setlocale(locale.LC_ALL, 'no_NB.utf8')
             _LOGGER.debug("Loaded page content: " + page)
             parsed_data = []
             for event in self.following:
