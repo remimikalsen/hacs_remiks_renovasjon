@@ -40,7 +40,12 @@ class RemiksRenovasjonBinarySensor(BinarySensorEntity):
         """Return the boolean state of the entity."""
         item = self._remiks_renovasjon.get_parsed_data(self._entity_code)
         if item is not None:
-            state =  (item[4].date() - datetime.now().date()).days <= int(self._remiks_renovasjon.days_notice)
+            state = True
+            days_until_next = (item[4].date() - datetime.now().date()).days
+            if days_until_next == 0 and datetime.today().time().hour >= int(self._remiks_renovasjon.turnover_hour):
+                state = False
+            elif  days_until_next > int(self._remiks_renovasjon.days_notice):
+                state = False
             _LOGGER.debug("State of entity code: Remiks boolean " + self._entity_code + ": " + str(state))
             return state
         else:

@@ -45,9 +45,10 @@ def setup(hass, config):
     streets = config[DOMAIN][CONF_STREETS]
     following = config[DOMAIN][CONF_FOLLOWING]
     days_notice = config[DOMAIN][CONF_DAYS_NOTICE]
+    turnover_hour = config[DOMAIN][CONF_TURNOVER_HOUR]
 
     remiks_renovasjon = RemiksRenovasjon(
-        streets, following, days_notice
+        streets, following, days_notice, turnover_hour
     )
     hass.data[DATA_REMIKS_RENOVASJON] = remiks_renovasjon
 
@@ -55,14 +56,15 @@ def setup(hass, config):
 
 
 class RemiksRenovasjon:
-    def __init__(self, streets, following, days_notice):
+    def __init__(self, streets, following, days_notice, turnover_hour):
         self.streets = streets
         self.following = following
         self.days_notice = days_notice
+        self.turnover_hour = turnover_hour
         self._parsed_data = self._fetch_parsed_data()
 
     def update_parsed_data(self):
-        needed = self._parsed_data_needs_update(self._parsed_data)
+        needed = self._parsed_data_needs_update(self._parsed_data, self.turnover_hour)
         if needed:
             self._parsed_data = self._fetch_parsed_data()
 
@@ -106,7 +108,7 @@ class RemiksRenovasjon:
         return parsed_data
 
     @staticmethod
-    def _parsed_data_needs_update(parsed_data):
+    def _parsed_data_needs_update(parsed_data, turnover_hour):
         
         for item in parsed_data:
             entity_code, _, _, _, next_date, _ = item
@@ -114,7 +116,7 @@ class RemiksRenovasjon:
             if next_date is None:
                 _LOGGER.info("No data for " + entity_code + ". Refreshing data.")
                 return True
-            if next_date.date() < datetime.today().date() or (next_date.date() == datetime.today().date() and datetime.today().time().hour >= CONF_TURNOVER_HOUR):
+            if next_date.date() < datetime.today().date() or (next_date.date() == datetime.today().date() and datetime.today().time().hour >= int(turnover_hour)):
                 _LOGGER.info("Data for " + entity_code + " has expired. Refreshing data.")
                 return True
 
