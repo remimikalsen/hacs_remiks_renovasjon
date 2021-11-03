@@ -97,10 +97,14 @@ class RemiksRenovasjon:
             for event in self.following:
                 _LOGGER.debug("Looking up " + event)
                 results = re.findall(r'(\d{2}.{6}\d{4}) - ' + event, page)
-                dato = results[0]
-                for word, initial in {"mai":"may", "okt":"oct", "des":"dec" }.items():
-                    dato = dato.replace(word.lower(), initial)
-                event_date = datetime.strptime(dato, '%d. %b %Y')
+                if results:
+                    dato = results[0]
+                    for word, initial in {"mai":"may", "okt":"oct", "des":"dec" }.items():
+                        dato = dato.replace(word.lower(), initial)
+                    event_date = datetime.strptime(dato, '%d. %b %Y')
+                else:
+                    # Causes updates on next needs_update. Not ideal, but what to do?
+                    event_date = None
                 entity_code = event.replace(' ','_').lower() + "_" + street
                 parsed_data.append( (entity_code, event, street, street.replace("-", " ").title(), event_date, DEFAULT_ICONS.get(event, '')))
 

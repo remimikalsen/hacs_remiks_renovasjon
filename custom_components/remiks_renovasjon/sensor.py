@@ -41,6 +41,9 @@ class RemiksRenovasjonSensor(Entity):
         """Return the state/date of the entity."""
         item = self._remiks_renovasjon.get_parsed_data(self._entity_code)
         if item is not None:
+            # If date is not set
+            if item[4] is None:
+                return None
             entity_state = item[4].strftime('%d. %b %Y')
             _LOGGER.debug("State of entity code: " + self._entity_code + ": " + entity_state)
             return entity_state
