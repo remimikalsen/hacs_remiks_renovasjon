@@ -9,6 +9,7 @@ _LOGGER = logging.getLogger(__name__)
 
 SCAN_INTERVAL = timedelta(hours=1)
 
+ATTR_START_TIME="start_time"
 
 def setup_platform(hass, config, add_entities, discovery_info=None):
 
@@ -59,6 +60,23 @@ class RemiksRenovasjonSensor(Entity):
             return item[5]
         else:
             _LOGGER.debug("No icon for entity code: " + self._entity_code)
+
+    @property
+    def extra_state_attributes(self):
+        """Return the state attributes."""
+
+        attrs = {}
+
+        item = self._remiks_renovasjon.get_parsed_data(self._entity_code)
+        if item is not None and item[4] is not None:
+            attrs.update({
+                ATTR_START_TIME: str(item[4])
+            })
+
+        if (extra := super().extra_state_attributes) is not None:
+            attrs.update(extra)
+
+        return attrs
 
     def update(self):
         """Update list of parsed data."""
