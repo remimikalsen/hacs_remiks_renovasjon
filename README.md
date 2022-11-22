@@ -1,7 +1,7 @@
 # Remiks renovasjon 
 
-*CURRENTLY NOT WORKING*
-Remiks changed their webpages, so the integration currently doesn't work. I've contacted Remiks about the issue.
+*DEPRECATED INTEGRATION*
+Remiks changed to "Min renovasjon", so you can use the [Min Renovasjon](https://github.com/Danielhiversen/home_assistant_min_renovasjon) integration now.
 
 
 Custom component to fetch the next Remiks garbage collection dates for Tromsø and Karlsøy in Norway. This component is in no way affiliated with or endoresed by Remiks.
