@@ -1,4 +1,9 @@
 # Remiks renovasjon 
+
+*CURRENTLY NOT WORKING*
+Remiks changed their webpages, so the integration currently doesn't work. I've contacted Remiks about the issue.
+
+
 Custom component to fetch the next Remiks garbage collection dates for Tromsø and Karlsøy in Norway. This component is in no way affiliated with or endoresed by Remiks.
 
 ## Installation
